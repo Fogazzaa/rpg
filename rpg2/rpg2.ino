@@ -3,8 +3,6 @@ int vidaHeroi = 100;
 int vidaVilao = 100;
 int ataqueHeroi = 5;
 int ataqueVilao = 5;
-int defesaHeroi = 5;
-int defesaVilao = 5;
 int dadoVilao = 0;
 int dadoHeroi = 0;
 int valorDadoHeroi = 0;
@@ -31,7 +29,7 @@ int contador[] = {0, 0, 0};
 int mensagemErro = 0;
 
 // Declaração das mensagens do jogo
-bool mensagens[] = {false, false, false, false, false};
+bool mensagens[] = {false, false, false, false, false, false};
 
 // Definição das Notas da música do Início
 const int notasMusica[] = {
@@ -68,12 +66,11 @@ void setup() {
   delay(1000);
 
   // Mensagem de boas-vindas
-  Serial.println("+======================================+\n"
-                 "| Bem vindo ao meu jogo. Inicie o jogo |\n"
-                 "|   apertando o botao central. Entao   |\n"
-                 "|  escolha seu player, Heroi (Verde)   |\n"
-                 "|  e Vilao (Vermelho), Boa Sorte !!!   |\n"
-                 "+======================================+");
+Serial.println("\nBem vindo ao meu jogo. Inicie o jogo\n"
+               "apertando o botao central. Entao\n"
+               "escolha seu player, Heroi (Verde)\n"
+               "e Vilao (Vermelho), Boa Sorte !!!\n");
+
   digitalWrite(ledAmarelo, HIGH);
 
   playPacmanIntro(); // Toca a música de introdução
@@ -110,37 +107,31 @@ void loop() {
   }
 
   if (controleBotao[1] && contador[1] == 1 && !mensagens[0]) {
-    Serial.println("+======================================+\n"
-                   "| O jogo comecou, o botao esquerdo     |\n"
-                   "| escolhe o vilao (led vermelho), e o  |\n"
-                   "| direito escolhe o heroi (led verde). |\n"
-                   "|       Faca uma boa escolha !!!       |\n"
-                   "+======================================+");
+    Serial.println("\nO jogo comecou, o botao esquerdo\n"
+               "escolhe o vilao (led vermelho), e o\n"
+               "direito escolhe o heroi (led verde).\n"
+               "Faca uma boa escolha !!!\n");
+
     mensagens[0] = true;
     digitalWrite(ledAmarelo, LOW);
   }
 
   if (controleBotao[2] && contador[2] == 1 && !mensagens[1] && contador[1] == 1) {
-    Serial.println("+======================================+\n"
-                   "| Voce escolheu o heroi !!!            |\n"
-                   "| Vida : 100                           |\n"
-                   "| Ataque : 5                           |\n"
-                   "| Defesa : 5                           |\n"
-                   "| Clique no botao central para         |\n"
-                   "| rolar o dado !!!                     |\n"
-                   "+======================================+");
+    Serial.println("\nVoce escolheu o heroi !!!\n"
+               "Vida : 100\n"
+               "Ataque : 5\n"
+               "Clique no botao central para\n"
+               "rolar o dado !!!\n");
+
     mensagens[1] = true;
   }
 
   if (controleBotao[0] && contador[0] == 1 && !mensagens[2] && contador[1] == 1) {
-    Serial.println("+======================================+\n"
-                   "| Voce escolheu o pepe !!!             |\n"
-                   "| Vida : 100                           |\n"
-                   "| Ataque : 5                           |\n"
-                   "| Defesa : 5                           |\n"
-                   "| Clique no botao central para         |\n"
-                   "| rolar o dado !!!                     |\n"
-                   "+======================================+");
+      Serial.println("\nVoce escolheu o vilao !!!\n"
+               "Vida : 100\n"
+               "Ataque : 5\n"
+               "Clique no botao central para\n"
+               "rolar o dado !!!\n");
     mensagens[2] = true;
   }
 
@@ -148,25 +139,61 @@ void loop() {
     valorDadoVilao = random(1, 7);
 
   if (contador[1] == 2 && controleBotao[1] && contador[2] == 1 && !mensagens[3]) {
+    
     int valorAtaqueHeroi = valorDadoHeroi * ataqueHeroi;
     int valorAtaqueVilao = valorDadoVilao * ataqueVilao;
-    Serial.print("+======================================+\n"
-                 "| O dado foi rolado !!!                |\n"
-                 "| Dado do Vilao: ");
+    vidaVilao = vidaVilao - valorAtaqueHeroi;
+    vidaHeroi = vidaHeroi - valorAtaqueVilao;
+    
+    digitalWrite(ledAmarelo, HIGH);
+    
+    Serial.print("\nO dado foi rolado !!!\n"
+               "Dado do Vilao: ");
     Serial.print(valorDadoVilao);
-    Serial.print("                     |\n"
-                 "| Dado do Heroi: ");
+    Serial.print("\nDado do Heroi: ");
     Serial.print(valorDadoHeroi);
-    Serial.print("                     |\n"
-                   "| Valor do Ataque do Heroi: ");
+    Serial.print("\nValor do Ataque do Heroi: ");
     Serial.print(valorAtaqueHeroi);
-    Serial.print("          |\n"
-                   "| Valor do Ataque do Vilao: ");
+    Serial.print("\nValor do Ataque do Vilao: ");
     Serial.print(valorAtaqueVilao);
-    Serial.print("          |\n"
-                   "+======================================+");
+    Serial.print("\n");
+
 
     mensagens[3] = true;
   }
-}
+if (controleBotao[1] && contador[1] == 2 && contador[0] == 1 && !mensagens[4]) {
+    
+  	int valorAtaqueHeroi = valorDadoHeroi * ataqueHeroi;
+    int valorAtaqueVilao = valorDadoVilao * ataqueVilao;
+  
+    vidaVilao = vidaVilao - valorAtaqueHeroi;
+    vidaHeroi = vidaHeroi - valorAtaqueVilao;
 
+    digitalWrite(ledAmarelo, HIGH);
+    
+    Serial.print("\nO dado foi rolado !!!\n"
+               "Dado do Vilao: ");
+    Serial.print(valorDadoVilao);
+    Serial.print("\nDado do Heroi: ");
+    Serial.print(valorDadoHeroi);
+    Serial.print("\nValor do Ataque do Heroi: ");
+    Serial.print(valorAtaqueHeroi);
+    Serial.print("\nValor do Ataque do Vilao: ");
+    Serial.print(valorAtaqueVilao);
+    Serial.print("\n");              
+    mensagens[4] = true;
+  
+	}
+  if (vidaVilao <= 0 && vidaHeroi > vidaVilao && !mensagens[6]) {
+
+    Serial.println("\nParabéns! O Heroi venceu a batalha!\n");
+
+    mensagens[6] = true; // Marca a mensagem como exibida
+	}
+   if (vidaHeroi <= 0 && vidaVilao > vidaHeroi && !mensagens[7]) {
+    
+    Serial.println("\nParabéns! O Heroi venceu a batalha!\n");
+
+    mensagens[7] = true; // Marca a mensagem como exibida
+}
+}
