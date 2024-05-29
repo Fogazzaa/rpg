@@ -29,7 +29,8 @@ int contador[] = {0, 0, 0};
 int mensagemErro = 0;
 
 // Declaração das mensagens do jogo
-bool mensagens[] = {false, false, false, false, false, false};
+bool mensagens[] = {false, false, false, false, false, false, false};
+bool mensagemfim = false;
 
 // Definição das Notas da música do Início
 const int notasMusica[] = {
@@ -138,7 +139,8 @@ void loop() {
     valorDadoHeroi = random(1, 7);
     valorDadoVilao = random(1, 7);
 
-  if (contador[1] == 2 && controleBotao[1] && contador[2] == 1 && !mensagens[3]) {
+  while(mensagemfim == false){ 
+    if (contador[1] == 2 && controleBotao[1] && contador[2] == 1 && !mensagens[3]) {
     
     int valorAtaqueHeroi = valorDadoHeroi * ataqueHeroi;
     int valorAtaqueVilao = valorDadoVilao * ataqueVilao;
@@ -156,12 +158,16 @@ void loop() {
     Serial.print(valorAtaqueHeroi);
     Serial.print("\nValor do Ataque do Vilao: ");
     Serial.print(valorAtaqueVilao);
+    Serial.print("\nVida do Vilao: ");
+    Serial.print(vidaVilao);
+    Serial.print("\nVida do Heroi: ");
+    Serial.print(vidaHeroi);
     Serial.print("\n");
 
 
     mensagens[3] = true;
   }
-if (controleBotao[1] && contador[1] == 2 && contador[0] == 1 && !mensagens[4]) {
+  if (controleBotao[1] && contador[1] == 2 && contador[0] == 1 && !mensagens[4]) {
     
   	int valorAtaqueHeroi = valorDadoHeroi * ataqueHeroi;
     int valorAtaqueVilao = valorDadoVilao * ataqueVilao;
@@ -180,20 +186,26 @@ if (controleBotao[1] && contador[1] == 2 && contador[0] == 1 && !mensagens[4]) {
     Serial.print(valorAtaqueHeroi);
     Serial.print("\nValor do Ataque do Vilao: ");
     Serial.print(valorAtaqueVilao);
-    Serial.print("\n");              
+    Serial.print("\nVida do Vilao: ");
+    Serial.print(vidaVilao);
+    Serial.print("\nVida do Heroi: ");
+    Serial.print(vidaHeroi);
+    Serial.print("\n");            
     mensagens[4] = true;
   
-	}
+	}}
   if (vidaVilao <= 0 && vidaHeroi > vidaVilao && !mensagens[6]) {
 
     Serial.println("\nParabéns! O Heroi venceu a batalha!\n");
 
     mensagens[6] = true; // Marca a mensagem como exibida
+    mensagemfim = true;
 	}
    if (vidaHeroi <= 0 && vidaVilao > vidaHeroi && !mensagens[7]) {
     
     Serial.println("\nParabéns! O Heroi venceu a batalha!\n");
 
     mensagens[7] = true; // Marca a mensagem como exibida
-}
+    mensagemfim = true;
+	}
 }
